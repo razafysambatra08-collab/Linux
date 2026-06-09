@@ -1,5 +1,5 @@
 #!/bin/bash
-source ./Outil.sh
+source ./outil.sh
 assist () {
 if [ -n "$pid_msg1" ]; then
         kill "$pid_msg1" 2>/dev/null
@@ -86,8 +86,8 @@ quizz_as ()
         echo "  [3] $C3"
         echo "  [4] $C4"
         echo ""
-        echo "Pour répondre entrer le numéro qui correpond à ces propositions" 
-        echo "Sinon tapez 0 pour envoyer un message à l'assistant"
+        echo "Pour répondre entrer le numéro qui correpond à ces propositions (1-4)" 
+        echo "Sinon tapez 0 pour envoyer un message à l'assistant et q pour quitter"
         local choice
         local reponse
 
@@ -97,7 +97,7 @@ quizz_as ()
             case "$choice" in
                 0)
                     # Envoyer un message sans quitter la question
-                    ecrire_msg "$ip_pc2" "$PORT1"
+                    ecrire_msg "$ip_pc2" "$PORT1" </dev/tty
                     # Réafficher la question pour que le joueur puisse répondre
                     echo ""
                     echo "=== Question $numeroquest/$total ==="
@@ -108,6 +108,10 @@ quizz_as ()
                     echo "  [4] $C4"
                     echo ""
                     echo "Votre réponse (1-4) ou 0 pour envoyer un message :"
+                    ;;
+                q)
+                    echo "Dommage!"
+                    return
                     ;;
                 [1-4])
                     reponse="$choice"
